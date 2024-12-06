@@ -1,16 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PivotTableUI from 'react-pivottable/PivotTableUI';
 import 'react-pivottable/pivottable.css';
-import { aggregators } from 'react-pivottable/Utilities';
-import './AnalisisProductos.css'; 
+import axios from 'axios';
 
-const AnalisisProductos = ({ productos }) => {
+const AnalisisProductos = () => {
+  const [productos, setProductos] = useState([]);
   const [pivotState, setPivotState] = useState({
     aggregatorName: 'Sum',
-    vals: ['costo_actual'], // Valor inicial a sumar
-    rows: ['nombre_categoria'], // Categoría como filas
-    cols: ['nombre_sucursal'], // Sucursal como columnas
+    vals: ['costo_actual'],
+    rows: ['nombre_categoria'],
+    cols: ['nombre_sucursal'],
   });
+
+  // Llamar al JSON desde la URL externa
+  useEffect(() => {
+    axios.get('https://tienddi.co/json.json')
+      .then((response) => {
+        console.log(response.data); // Imprimir los datos recibidos
+        setProductos(response.data); // Guardamos los datos en el estado
+      })
+      .catch((error) => {
+        console.error('Error al cargar el archivo JSON:', error);
+      });
+  }, []); // El array vacío asegura que la solicitud solo se haga una vez al cargar el componente.
+
+  // Verificamos si los productos se cargaron correctamente
+  if (productos.length === 0) {
+    return <div>Loading...</div>; // Mensaje mientras se cargan los productos
+  }
 
   return (
     <div className="analisis-productos-container">
@@ -31,7 +48,6 @@ const AnalisisProductos = ({ productos }) => {
           }))}
           onChange={(s) => setPivotState(s)}
           {...pivotState}
-          aggregators={aggregators}
         />
       </div>
     </div>
@@ -39,4 +55,3 @@ const AnalisisProductos = ({ productos }) => {
 };
 
 export default AnalisisProductos;
-
