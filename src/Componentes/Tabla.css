@@ -1,0 +1,102 @@
+ .custom-tabulator {
+  border-radius: 10px; /* Bordes redondeados */
+  overflow: hidden; /* Evita que el contenido sobresalga de los bordes */
+  border: 2px solid #ccc; /* Borde externo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar un efecto flotante */
+}
+
+
+ .custom-tabulator .tabulator-header {
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+ 
+  .custom-tabulator .tabulator-row {
+    background-color: #f5faff; 
+  }
+  
+  .custom-tabulator .tabulator-row:nth-child(even) {
+    background-color: #eaf4fc; 
+  }
+  
+  /* Filas específicas con fondo azul más fuerte */
+  .custom-tabulator .tabulator-row .tabulator-cell[data-field="nombre"],
+  .custom-tabulator .tabulator-row .tabulator-cell[data-field="costo_actual"],
+  .custom-tabulator .tabulator-row .tabulator-cell[data-field="cantidad_teorica"],
+  .custom-tabulator .tabulator-row .tabulator-cell[data-field="cantidad_fisica"],
+  .custom-tabulator .tabulator-row .tabulator-cell[data-field="diferencia"],
+  .custom-tabulator .tabulator-row .tabulator-cell[data-field="empleado"],
+  .custom-tabulator .tabulator-row .tabulator-cell[data-field="fecha_registro"] {
+    background-color: #005A9E; 
+    color: white;
+    font-weight: bold;
+  }
+  
+  
+  .highlight-low {
+    color: white;
+    background-color: red;
+    font-weight: bold;
+    padding: 4px 6px;
+    border-radius: 4px;
+  }
+  
+  
+  .custom-tabulator .tabulator-header .tabulator-header-filter input {
+    border-radius: 15px; 
+    border: 1px solid #ccc;
+    padding: 6px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .custom-tabulator .tabulator-col-resize-handle {
+  margin-left: 1 !important; 
+  margin-right: 1 !important; 
+}
+  
+  .custom-tabulator .tabulator-header .tabulator-header-filter input:focus {
+    border-color: #0078D7;
+    box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
+  }
+  .tabulator .tabulator-header .tabulator-col  {
+    background-color: #005A9E !important;
+  }
+  .tabulator-header-contents{
+    background-color: #005A9E !important;
+  }
+  
+
+  .header-empresaria {
+    font-family: 'Arial', 'Helvetica', sans-serif; 
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #81c9fa; 
+    margin-bottom: 24px;
+    text-transform: uppercase; 
+    letter-spacing: 0px; 
+  }
+  
+
+  select  {
+    font-family: Arial, sans-serif;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 2px solid #ccc;  /* Ajusta el color y grosor del borde */
+    background-color: #eaf4fc; /* Color de fondo del botón */   
+ }
+
+ .tituloBoton {
+  font-family: Arial;
+  margin-Left: 20px;
+
+ }
+
+ .tabla{
+ 
+    border-radius: 10px;
+    border-collapse: separate;  /* Para asegurarse de que los bordes no se solapen */
+    border: 2px solid #000; /* Ajusta el color y grosor de los bordes según prefieras */
+ }
