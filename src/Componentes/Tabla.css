@@ -3,11 +3,21 @@
   overflow: hidden; /* Evita que el contenido sobresalga de los bordes */
   border: 2px solid #ccc; /* Borde externo */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar un efecto flotante */
-}
 
+  }
+
+  .calendario{
+    font-family:'Quicksand', Helvetica, Arial, Lucida, sans-serif; 
+    border-radius: 15px; /* Redondea las esquinas */
+    padding: 5px 10px; /* Agrega espacio dentro del input */
+    width: 220px; /* Establece un ancho mayor */
+    border: 2px solid #08244c; /* Color del borde */
+    font-size: 16px; /* Tamaño de la fuente */
+    outline: none; /* Elimina el contorno predeterminado */
+  }
 
  .custom-tabulator .tabulator-header {
-    color: black;
+    color: white;
     font-weight: bold;
     text-transform: uppercase;
   }
@@ -19,19 +29,6 @@
   
   .custom-tabulator .tabulator-row:nth-child(even) {
     background-color: #eaf4fc; 
-  }
-  
-  /* Filas específicas con fondo azul más fuerte */
-  .custom-tabulator .tabulator-row .tabulator-cell[data-field="nombre"],
-  .custom-tabulator .tabulator-row .tabulator-cell[data-field="costo_actual"],
-  .custom-tabulator .tabulator-row .tabulator-cell[data-field="cantidad_teorica"],
-  .custom-tabulator .tabulator-row .tabulator-cell[data-field="cantidad_fisica"],
-  .custom-tabulator .tabulator-row .tabulator-cell[data-field="diferencia"],
-  .custom-tabulator .tabulator-row .tabulator-cell[data-field="empleado"],
-  .custom-tabulator .tabulator-row .tabulator-cell[data-field="fecha_registro"] {
-    background-color: #005A9E; 
-    color: white;
-    font-weight: bold;
   }
   
   
@@ -62,35 +59,38 @@
     box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
   }
   .tabulator .tabulator-header .tabulator-col  {
-    background-color: #005A9E !important;
+    background-color:  #08244c !important;
   }
   .tabulator-header-contents{
-    background-color: #005A9E !important;
+    background-color:  #08244c  !important;
   }
   
 
   .header-empresaria {
-    font-family: 'Arial', 'Helvetica', sans-serif; 
+    font-family:'Quicksand', Helvetica, Arial, Lucida, sans-serif; 
     font-size: 24px; 
     font-weight: bold; 
-    color: #81c9fa; 
+    color: #08244c; 
     margin-bottom: 24px;
     text-transform: uppercase; 
     letter-spacing: 0px; 
   }
   
 
-  select  {
-    font-family: Arial, sans-serif;
-    border-radius: 5px;
-    padding: 5px 10px;
-    border: 2px solid #ccc;  /* Ajusta el color y grosor del borde */
-    background-color: #eaf4fc; /* Color de fondo del botón */   
+  select, button {
+    font-family:'Quicksand', Helvetica, Arial, Lucida, sans-serif;
+    font-size: 15px;
+    border-radius: 12px;
+    padding: 8px 10px;
+    border: 2px solid #08244c;  /* Ajusta el color y grosor del borde */
+    background-color: rgba(150, 180, 210, 0.5);  
  }
 
+ 
  .tituloBoton {
-  font-family: Arial;
-  margin-Left: 20px;
+  font-family: Helvetica, Arial, Lucida, sans-serif;
+  margin-Left: 5px;
+  font-size: 15px;
 
  }
 
@@ -100,3 +100,4 @@
     border-collapse: separate;  /* Para asegurarse de que los bordes no se solapen */
     border: 2px solid #000; /* Ajusta el color y grosor de los bordes según prefieras */
  }
+

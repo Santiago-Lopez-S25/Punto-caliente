@@ -7,17 +7,17 @@ import './Tabla.css';
 const AnalisisProductos = () => {
   const [productos, setProductos] = useState([]);
   const [agrupacion, setAgrupacion] = useState(['nombre_categoria', 'nombre_sucursal']); // Agrupación inicial
+  const [fechaInicio, setFechaInicio] = useState('');
+  const [fechaFin, setFechaFin] = useState('');
   const tablaRef = useRef(null);
   const tabulatorInstance = useRef(null);
 
   useEffect(() => {
-    // Cargar datos iniciales desde la API
     axios
       .get('https://tienddi.co/json.json')
       .then((response) => {
         const data = response.data;
 
-        // Asegurar datos numéricos y agregar información faltante
         const datosConCategoria = data.map((producto) => ({
           ...producto,
           costo_actual: parseFloat(producto.costo_actual) || 0,
@@ -80,6 +80,16 @@ const AnalisisProductos = () => {
           },
           { title: 'Empleado', field: 'empleado', headerFilter: 'input' },
           { title: 'Fecha Registro', field: 'fecha_registro', sorter: 'date', headerFilter: 'input' },
+          { 
+            title: 'Estados', 
+            field: 'estado', 
+            formatter: (cell) => {
+              const value = cell.getRow().getData().diferencia; // Basado en la columna diferencia
+              return value < 10 
+                ? `<span style="color: red;">Bajo</span>` 
+                : '<span style="color: green;">Normal</span>';
+            },
+          },
         ],
       });
 
@@ -95,8 +105,23 @@ const AnalisisProductos = () => {
     }
   };
 
+  const filtrarPorFechas = () => {
+    if (fechaInicio && fechaFin) {
+      const fechaInicioObj = new Date(fechaInicio);
+      const fechaFinObj = new Date(fechaFin);
+  
+      const datosFiltrados = productos.filter((producto) => {
+        const fechaRegistro = new Date(producto.fecha_registro);
+        return fechaRegistro >= fechaInicioObj && fechaRegistro <= fechaFinObj;
+      });
+  
+      tabulatorInstance.current.replaceData(datosFiltrados);
+    }
+  };
+  
+
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '30px' }}>
       <h3 className='header-empresaria'> Gestión de productos</h3>
       <div style={{ marginBottom: '20px' }}>
         <label className='tituloBoton'>Agrupar por: </label>
@@ -118,9 +143,29 @@ const AnalisisProductos = () => {
           <option value="empleado">Empleado</option>
         </select>
       </div>
+      <div style={{ marginBottom: '20px' }}>
+          <label className='tituloBoton'>Fecha inicial: </label>
+          <input className='calendario'
+            type="datetime-local" 
+            value={fechaInicio} 
+            onChange={(e) => setFechaInicio(e.target.value)} 
+          />
+          <label className='tituloBoton'> Fecha final: </label>
+          <input className='calendario'
+            type="datetime-local" 
+            value={fechaFin} 
+            onChange={(e) => setFechaFin(e.target.value)} 
+          />
+          <button 
+            className='tituloBoton'
+            onClick={filtrarPorFechas}
+          >
+            Consultar
+          </button>
+        </div>
+
       <div
         ref={tablaRef}
-    
       />
     </div>
   );
