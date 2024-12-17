@@ -81,8 +81,8 @@ const AnalisisProductos = () => {
           { title: 'Empleado', field: 'empleado', headerFilter: 'input' },
           { title: 'Fecha Registro', field: 'fecha_registro', sorter: 'date', headerFilter: 'input' },
           { 
-            title: 'Estados', 
-            field: 'estado', 
+            title: 'inventario', 
+            field: 'invetario', 
             formatter: (cell) => {
               const value = cell.getRow().getData().diferencia; // Basado en la columna diferencia
               return value < 10 

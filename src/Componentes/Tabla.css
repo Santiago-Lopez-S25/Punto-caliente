@@ -1,20 +1,28 @@
- .custom-tabulator {
-  border-radius: 10px; /* Bordes redondeados */
-  overflow: hidden; /* Evita que el contenido sobresalga de los bordes */
-  border: 2px solid #ccc; /* Borde externo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar un efecto flotante */
-
-  }
+.custom-tabulator {
+  border-radius: 10px; 
+  overflow: hidden; 
+  border: 1px solid #ccc; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border-collapse: collapse;
+  font-family: Arial, Helvetica, sans-serif;
+  
+    }
 
   .calendario{
     font-family:'Quicksand', Helvetica, Arial, Lucida, sans-serif; 
-    border-radius: 15px; /* Redondea las esquinas */
-    padding: 5px 10px; /* Agrega espacio dentro del input */
-    width: 220px; /* Establece un ancho mayor */
-    border: 2px solid #08244c; /* Color del borde */
-    font-size: 16px; /* Tamaño de la fuente */
-    outline: none; /* Elimina el contorno predeterminado */
+    border-radius: 5px; 
+    padding: 1px 8px; 
+    width: 185px; 
+    border: 1px solid #ccc; 
+    font-size: 13px; 
+    outline: none; 
   }
+
+  .calendario:hover{
+    border: 1px solid #08244c; 
+
+  }
+
 
  .custom-tabulator .tabulator-header {
     color: white;
@@ -36,14 +44,14 @@
     color: white;
     background-color: red;
     font-weight: bold;
-    padding: 4px 6px;
+    padding: 2px 4px;
     border-radius: 4px;
   }
   
   
   .custom-tabulator .tabulator-header .tabulator-header-filter input {
-    border-radius: 15px; 
-    border: 1px solid #ccc;
+    border-radius: 5px; 
+    border:0px solid #ccc;
     padding: 6px;
     outline: none;
     transition: all 0.3s ease;
@@ -58,13 +66,14 @@
     border-color: #0078D7;
     box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
   }
+
   .tabulator .tabulator-header .tabulator-col  {
-    background-color:  #08244c !important;
+    background-color:  #002149 !important;
   }
-  .tabulator-header-contents{
-    background-color:  #08244c  !important;
+
+    .tabulator-header-contents{
+    background-color:  #002149  !important;
   }
-  
 
   .header-empresaria {
     font-family:'Quicksand', Helvetica, Arial, Lucida, sans-serif; 
@@ -76,15 +85,20 @@
     letter-spacing: 0px; 
   }
   
-
   select, button {
+    color: #08244c;
     font-family:'Quicksand', Helvetica, Arial, Lucida, sans-serif;
     font-size: 15px;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 8px 10px;
-    border: 2px solid #08244c;  /* Ajusta el color y grosor del borde */
-    background-color: rgba(150, 180, 210, 0.5);  
- }
+    border: 0px solid transparent; /* Ajusta el color y grosor del borde */
+    background-color: rgba(150, 180, 210, 0.5);
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+ } 
+
+  button:hover {
+      
+    border: 1px solid #08244c; }
 
  
  .tituloBoton {
