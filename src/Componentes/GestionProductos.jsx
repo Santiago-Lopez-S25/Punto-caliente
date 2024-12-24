@@ -25,7 +25,7 @@ const AnalisisProductos = () => {
           costo_actual: parseFloat(producto.costo_actual) || 0,
           nombre_categoria: producto.nombre_categoria || 'Sin Categoría',
           nombre_sucursal: producto.nombre_sucursal || 'Sucursal Desconocida',
-          estado: producto.diferencia < 10 ? 'Bajo' : 'Normal', // Campo calculado
+          estado: producto.diferencia < 10 ? 'Bajo' : 'Normal', 
         }));
 
         setProductos(datosConCategoria);
@@ -121,9 +121,12 @@ const AnalisisProductos = () => {
       const fechaInicioObj = new Date(fechaInicio);
       const fechaFinObj = new Date(fechaFin);
 
+      // Extender fecha final sumando 1 día
+      fechaFinObj.setDate(fechaFinObj.getDate() + 1);
+
       const datosFiltrados = productos.filter((producto) => {
         const fechaRegistro = new Date(producto.fecha_registro);
-        return fechaRegistro >= fechaInicioObj && fechaRegistro <= fechaFinObj;
+        return fechaRegistro >= fechaInicioObj && fechaRegistro < fechaFinObj;
       });
 
       tabulatorInstance.current.replaceData(datosFiltrados);
