@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("/fonts/quicksand/Quicksand-VariableFont_wght.ttf")
+    format("truetype");
+  font-display: swap;
+  font-weight: 100 900;
+}
+
+@layer base {
+  :root {
+    /*
+    * fonts
+    */
+    --font-body: "Quicksand", sans-serif;
+
+    /*
+    * colors
+    */
+    --color-light: 255, 255, 255;
+    --color-primary: 0, 61, 136;
+    --color-secondary: 250, 199, 38;
+    --color-hover: 0, 105, 217;
+
+    /*
+    * text colors
+    */
+    --text-base: 107, 114, 128;
+    --text-base-dark: 75, 85, 99;
+    --text-muted: 156, 163, 175;
+    --text-muted-light: 209, 213, 219;
+    --text-heading: 31, 41, 55;
+    --text-sub-heading: 55, 65, 81;
+    --text-bolder: 31, 41, 55;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --font-body: "Quicksand", sans-serif;
+      --color-primary: 0, 61, 136;
+      --color-secondary: 250, 199, 38;
+      --color-tertiary: 0, 105, 217;
+      --color-light: 255, 255, 255;
+    }
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: rgb(var(--color-primary));
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

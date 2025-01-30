@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { TabulatorFull as Tabulator } from 'tabulator-tables';
 import 'tabulator-tables/dist/css/tabulator.min.css';
 import './Tabla.css';
+
+
+
 
 const AnalisisProductos = () => {
   const [productos, setProductos] = useState([]);
@@ -12,20 +15,34 @@ const AnalisisProductos = () => {
   const tablaRef = useRef(null);
   const tabulatorInstance = useRef(null);
 
-  // Obtener datos de la API y calcular el campo "estado"
+  // Solicitud GET a la API
   useEffect(() => {
+    const config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'https://api.cuenti.co/jServerj4ErpPro/com/j4ErpPro/server/inv/movimiento/historico_conteo/1735707600000/1736355978288/2',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        accept: 'application/json;charset=UTF-8',
+        'x-auth-token-empresa': '14717',
+        'x-gtm': 'GMT-0500',
+        Authorization:
+          "Bearer MTQ3MTd8MTQ3MTd8ODExMDIzMjM4fDB8ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6STFOaUo5LmV5SnpkV0lpT2lJeE5EY3hOeTB5TURJME1ERXhOekF3TURNeFltSmlaV0ZpWmkwNFpqaGpMVFJtWXpJdFltWmpaUzFqWlRGaE56ZzNPRFJqTm1WOE9ERXhNREl6TWpNNElpd2lhV0YwSWpveE56TTNOREkzTlRrMExDSmxlSEFpT201MWJHeDkuSEU5LXNqY196UDdNSGpCQksxTHFmV3Z4MUtucGhBblFyX0txbUdkdHlCZw==",
+      },
+    };
+
     axios
-      .get('https://tienddi.co/json.json')
+      .request(config)
       .then((response) => {
         const data = response.data;
 
-        // Agregar campo "estado" basado en la columna "diferencia"
         const datosConCategoria = data.map((producto) => ({
           ...producto,
           costo_actual: parseFloat(producto.costo_actual) || 0,
           nombre_categoria: producto.nombre_categoria || 'Sin Categoría',
           nombre_sucursal: producto.nombre_sucursal || 'Sucursal Desconocida',
-          estado: producto.diferencia < 10 ? 'Bajo' : 'Normal', 
+          estado: producto.diferencia < 10 ? 'Bajo' : 'Normal',
+          fecha_registro: new Date(producto.fecha_registro), // Asegúrate de que sea un objeto Date
         }));
 
         setProductos(datosConCategoria);
@@ -42,10 +59,17 @@ const AnalisisProductos = () => {
         data: productos,
         layout: 'fitColumns',
         height: '500px',
-        groupBy: agrupacion, // Agrupación dinámica
-        groupHeader: (value, count) => `${value} - (${count} productos)`, // Configuración del encabezado de grupo
+        groupBy: agrupacion,
+        groupHeader: (value, count) => `${value} - (${count} productos)`,
         columns: [
-          { title: 'Producto', field: 'nombre', headerFilter: 'input' },
+          {
+            title: 'Producto',
+            field: 'nombre',
+            headerFilter: 'input',
+            headerFilterFunc: 'like',
+            headerFilterPlaceholder: '',
+            headerFilterParams: { class: 'filter-input' }, // Clase personalizada
+          },
           { title: 'Categoría', field: 'nombre_categoria', visible: false },
           { title: 'Sucursal', field: 'nombre_sucursal', visible: false },
           { title: 'Costo Actual', field: 'costo_actual', sorter: 'number', headerFilter: 'number' },
@@ -82,15 +106,34 @@ const AnalisisProductos = () => {
                 : value;
             },
           },
-          { title: 'Empleado', field: 'empleado', headerFilter: 'input' },
-          { title: 'Fecha Registro', field: 'fecha_registro', sorter: 'date', headerFilter: 'input' },
+          {
+            title: 'Empleado',
+            field: 'empleado',
+            headerFilter: 'input',
+            headerFilterFunc: 'like',
+            headerFilterPlaceholder: '',
+            headerFilterParams: { class: 'filter-input' }, // Clase personalizada
+          },
+          {
+            title: 'Fecha Registro',
+            field: 'fecha_registro',
+            sorter: 'date',
+            headerFilter: 'input',
+            headerFilterFunc: 'like',
+            headerFilterPlaceholder: '',
+            formatter: (cell) => {
+              const fecha = cell.getValue();
+              return new Date(fecha).toLocaleString();
+            },
+            headerFilterParams: { class: 'filter-input' }, // Clase personalizada
+          },
           {
             title: 'Estados',
-            field: 'estado', // Usamos el campo calculado "estado"
-            headerFilter: 'input', // Campo de entrada para filtrar
+            field: 'estado',
+            headerFilter: 'input',
             headerFilterFunc: (headerValue, rowValue) => {
-              if (!headerValue) return true; // No hay filtro
-              return rowValue.toLowerCase() === headerValue.toLowerCase(); // Comparación insensible a mayúsculas
+              if (!headerValue) return true;
+              return rowValue.toLowerCase() === headerValue.toLowerCase();
             },
             formatter: (cell) => {
               const value = cell.getValue();
@@ -98,11 +141,11 @@ const AnalisisProductos = () => {
                 ? `<span style="color: red;">${value}</span>`
                 : `<span style="color: green;">${value}</span>`;
             },
+            headerFilterParams: { class: 'filter-input' }, // Clase personalizada
           },
         ],
       });
 
-      // Aplicar clase personalizada a la tabla
       tabulatorInstance.current.element.classList.add('custom-tabulator');
     }
   }, [productos, agrupacion]);
@@ -115,21 +158,27 @@ const AnalisisProductos = () => {
     }
   };
 
-  // Filtrar por fechas
+  // Filtro de fechas
   const filtrarPorFechas = () => {
     if (fechaInicio && fechaFin) {
       const fechaInicioObj = new Date(fechaInicio);
       const fechaFinObj = new Date(fechaFin);
 
-      // Extender fecha final sumando 1 día
-      fechaFinObj.setDate(fechaFinObj.getDate() + 1);
+      fechaFinObj.setHours(23, 59, 59, 999);
 
       const datosFiltrados = productos.filter((producto) => {
-        const fechaRegistro = new Date(producto.fecha_registro);
-        return fechaRegistro >= fechaInicioObj && fechaRegistro < fechaFinObj;
+        const fechaRegistro = producto.fecha_registro.getTime();
+        return (
+          fechaRegistro >= fechaInicioObj.getTime() &&
+          fechaRegistro <= fechaFinObj.getTime()
+        );
       });
 
-      tabulatorInstance.current.replaceData(datosFiltrados);
+      if (tabulatorInstance.current) {
+        tabulatorInstance.current.replaceData(datosFiltrados);
+      }
+    } else {
+      alert('Por favor, selecciona ambas fechas para filtrar.');
     }
   };
 
@@ -165,11 +214,11 @@ const AnalisisProductos = () => {
           value={fechaFin}
           onChange={(e) => setFechaFin(e.target.value)}
         />
+
         <button className="tituloBoton" onClick={filtrarPorFechas}>
           Consultar
         </button>
       </div>
-
       <div ref={tablaRef} />
     </div>
   );

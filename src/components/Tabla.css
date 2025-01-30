@@ -68,11 +68,11 @@
   }
 
   .tabulator .tabulator-header .tabulator-col  {
-    background-color:  #002149 !important;
+    background-color:  rgb(var(--color-primary)) !important;
   }
 
     .tabulator-header-contents{
-    background-color:  #002149  !important;
+    background-color:  rgb(var(--color-primary)) !important;
   }
 
   .header-empresaria {
@@ -115,3 +115,27 @@
     border: 2px solid #000; /* Ajusta el color y grosor de los bordes según prefieras */
  }
 
+ .filter-input { 
+  color: import #333; 
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  padding: 5px;
+  width: 100%;
+}
+
+.filter-input::placeholder {
+  color: #999;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button, input, optgroup, select, textarea {
+
+  color: black;
+
+}
